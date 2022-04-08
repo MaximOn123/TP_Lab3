@@ -45,6 +45,7 @@ void DivideIntoWords(const char* str, int wordsNum, char*** words) {
 }
 
 void PrintWordsInReverseOrder(char*** wordsPtr, int wordsNum, const char* delimiter) {
+  printf("%s", "Words in reverse order:\n");
 	for (int i = 1; i < wordsNum; ++i) {
 		printf("%s%s", (*wordsPtr)[wordsNum - i], delimiter);
 	}
@@ -56,10 +57,8 @@ int main(int argc, char* argv[]) {
 	const int maxWordLength = 20;
 	char* str = (char*)malloc(maxStrLength);
 	strcpy(str, argv[1]);
-	printf("%s\n", str);
+	printf("Original string:\n%s\n", str);
 	int wordsNum = CountWords(str);
-	int len = strlen(str);
-	printf("%d\n", wordsNum);	
 	char** words = (char**)malloc(wordsNum * sizeof(char*));
 	for (int i = 0; i < wordsNum; ++i) {
 		words[i] = (char*)malloc(maxWordLength * sizeof(char));
