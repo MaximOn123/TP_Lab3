@@ -21,21 +21,34 @@ int CountWords (const char* str) {
 	return wordsNum;
 }
 
+
 void DivideIntoWords(const char* str, int wordsNum, char*** words) {
 	int len = strlen(str);
 	int j = 0, k = 0;
 	for (int i = 0; i < len - 1; ++i) {
-		if (!strncmp(&str[i], ", ", 2) && i != j) {
-			strncpy((*words)[k], &str[j], i - j);
-			j = i + 2;
-			++i;
-			++k;
+		if (!strncmp(&str[i], ", ", 2)) {
+			if (i != j) {
+				strncpy((*words)[k], &str[j], i - j);
+				j = i + 2;
+				++i;
+				++k;
+			}
+			else {
+				j = i + 2;
+			}
 		}
+		
 	}
 	if (strcmp(&str[j], "\0")) {
 		strncpy((*words)[k], &str[j], len - j);
 	}
+}
 
+void PrintWordsInReverseOrder(char*** wordsPtr, int wordsNum, const char* delimiter) {
+	for (int i = 1; i < wordsNum; ++i) {
+		printf("%s%s", (*wordsPtr)[wordsNum - i], delimiter);
+	}
+	printf("%s\n", (*wordsPtr)[0]);
 }
 
 int main(int argc, char* argv[]) {
@@ -52,8 +65,6 @@ int main(int argc, char* argv[]) {
 		words[i] = (char*)malloc(maxWordLength * sizeof(char));
 	}
 	DivideIntoWords(str, wordsNum, &words);
-	for (int i = 0; i < wordsNum; ++i) {
-		printf("Words[%d] = %s; Len = %d\n", (int)i, words[i], (int)strlen(words[i]));
-	}
+	PrintWordsInReverseOrder(&words, wordsNum, ", ");
 	return 0;
 }
